@@ -1,0 +1,868 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>【知识点总结】模拟电子技术（模电） | 樂乐の博客</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="https://maojin08796.github.io/2025/04/25/%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/index.html"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="模拟电子技术（模电）"><!-- pwa--><meta name="theme-color" content="#006a73"><meta name="apple-mobile-web-app-status-bar-style" content="#006a73"><link rel="manifest" href="/manifest.json"><meta name="msapplication-TileColor" content="#006a73"><link rel="mask-icon" href="/img/pwa/favicon.png" color="#006a73"><link rel="apple-touch-icon" sizes="180x180" href="/img/pwa/favicon.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/pwa/favicon_16.png"><link rel="icon" type="image/png" sizes="32x32" href="/img/pwa/favicon_32.png"><link rel="bookmark" href="/img/pwa/favicon.png"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>let mdate = "7-7,9-18,12-13";
+mdate = (mdate.split(","));
+let ndate = new Date();
+for (let i of mdate) {
+    if (i === (ndate.getMonth()+1) + "-" + (ndate.getDate())) {
+        document.documentElement.classList.add('memorial');
+    }
+}
+</script><link rel="stylesheet" href="/css/font.css"><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: true,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: true
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: {"jump":"404 Not Found","back":"ヾ(≧∇≦*)ゝHey, hey, you fell for it."},
+    expire: {"time":30,"position":"top","text_prev":"This article expired ","text_next":" day ago, if the content does not match, please contact the webmaster to update it."},
+};</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '模电',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body" data-type="模电"><div><canvas id="universe"></canvas></div><div><div id="loading-box" onclick="preloader.endLoading();" style="zoom:1"><div class="loading-bg"><img class="loading-img nolazyload" src="/img/favicon.png" alt="loading image"></div></div><script>const preloader = {
+    isLoaded: false,
+    endLoading: () => {
+        if (!preloader.isLoaded) {
+            document.getElementById('loading-box').classList.add('loaded');
+            preloader.isLoaded = true;
+            preloader.togglePaceDone();
+        }
+    },
+    initLoading: () => {
+        document.getElementById('loading-box').classList.remove('loaded');
+        preloader.isLoaded = false;
+        preloader.togglePaceDone();
+    },
+    togglePaceDone: () => {
+        document.getElementById('body').className = preloader.isLoaded ? 'pace-done' : '';
+    }
+}
+
+window.addEventListener('load', () => {
+    preloader.endLoading();
+});
+
+window.addEventListener('pjax:send', () => {
+    preloader.initLoading();
+});
+
+document.addEventListener('pjax:complete', () => {
+    preloader.endLoading();
+});
+
+setTimeout(() => {
+    preloader.endLoading();
+}, 5000);</script></div><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/Markdown/">Markdown<sup>1</sup></a><a href="/tags/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/">课堂笔记<sup>4</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/">日常<sup>4</sup></a><a href="/tags/MathLax/">MathLax<sup>1</sup></a><a href="/tags/Python/">Python<sup>1</sup></a><a href="/tags/%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/">模拟电子技术（模电）<sup>1</sup></a><a href="/tags/%E6%A8%A1%E7%94%B5/">模电<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2025/11/"><span class="date">2025/11</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/04/"><span class="date">2025/04</span><div class="count-group"><span class="count">2</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2024/10/"><span class="date">2024/10</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2023/06/"><span class="date">2023/06</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">5</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleKeyboard" onclick="sco.switchKeyboard()"><span class="keyboardSwitch" title="键盘快捷键"><i class="solitude fas fa-keyboard"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fas fa-compact-disc"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/pwa/favicon.ico" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fa fa-paper-plane"></i><span>关于</span></a></li><li><a class="site-page child" href="/equipment/"><i class="solitude  fas fa-laptop"></i><span>我的装备</span></a></li><li><a class="site-page child" href="/tlink/"><i class="solitude  fas fa-toolbox"></i><span>在线工具</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Markdown/">Markdown<sup>1</sup></a><a href="/tags/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/">课堂笔记<sup>4</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/">日常<sup>4</sup></a><a href="/tags/MathLax/">MathLax<sup>1</sup></a><a href="/tags/Python/">Python<sup>1</sup></a><a href="/tags/%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/">模拟电子技术（模电）<sup>1</sup></a><a href="/tags/%E6%A8%A1%E7%94%B5/">模电<sup>1</sup></a></div></div></div></div><div><div id="keyboard-tips"><div class="keyboardTitle">博客快捷键</div><div class="keyboardList"><div class="keyboardItem"><div class="keyGroup"><div class="key">Shift</div><div class="key">K</div></div><div class="keyContent"><div class="content">关闭快捷菜单</div></div></div><div class="keyboardItem"><div class="keyGroup"><div class="key">Shift</div><div class="key">A</div></div><div class="keyContent"><div class="content">打开控制台</div></div></div><div class="keyboardItem"><div class="keyGroup"><div class="key">Shift</div><div class="key">M</div></div><div class="keyContent"><div class="content">播放/暂停音乐</div></div></div><div class="keyboardItem"><div class="keyGroup"><div class="key">Shift</div><div class="key">L</div></div><div class="keyContent"><div class="content">打开友链</div></div></div></div></div><script>const keyboard_addKeyup = (e) => {
+    if (e.key === 'Shift') {
+        document.getElementById('keyboard-tips').classList.remove('show');
+    }
+}
+
+const keyboard_addKeydown = (e) => {
+    const keyboards = [{"name":"关闭快捷菜单","key":"K","func":"keyboard"},{"name":"打开控制台","key":"A","sco":"showConsole"},{"name":"播放/暂停音乐","key":"M","sco":"musicToggle"},{"name":"打开友链","key":"L","url":"/links/"}];
+    if (e.key === 'Shift') {
+        document.getElementById('keyboard-tips').classList.add('show');
+    }
+
+    for (let i = 0; i < keyboards.length; i++) {
+        if (keyboards[i].url) {
+            if (keyboards[i].url.startsWith('http')) {
+                if (e.key === keyboards[i].key) {
+                    window.open(keyboards[i].url);
+                }
+            } else {
+                if (e.key === keyboards[i].key) {
+                    pjax.loadUrl(keyboards[i].url);
+                }
+            }
+        } else if (keyboards[i].sco) {
+            if (e.key === keyboards[i].key) {
+                sco[keyboards[i].sco]();
+            }
+        } else if (keyboards[i].func) {
+            if (e.key === keyboards[i].key) {
+                window[keyboards[i].func]();
+            }
+        }
+    }
+}
+
+function openKeyboard() {
+
+    window.addEventListener('keyup', keyboard_addKeyup);
+
+    window.addEventListener('keydown', keyboard_addKeydown);
+}
+function closeKeyboard() {
+
+    window.removeEventListener('keyup', keyboard_addKeyup);
+
+    window.removeEventListener('keydown', keyboard_addKeydown);
+}
+
+var sco_keyboards = localStorage.getItem('keyboard') === 'true'
+if (sco_keyboards) {
+    openKeyboard();
+    let keyboard = document.getElementById('consoleKeyboard');
+    keyboard?.classList.add('on');
+}</script></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/pwa/favicon.ico" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a href="/" title="返回博客主页" id="site-name"><span class="title">樂乐の博客</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">【知识点总结】模拟电子技术（模电）</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fa fa-paper-plane"></i><span>关于</span></a></li><li><a class="site-page child" href="/equipment/"><i class="solitude  fas fa-laptop"></i><span>我的装备</span></a></li><li><a class="site-page child" href="/tlink/"><i class="solitude  fas fa-toolbox"></i><span>在线工具</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png" alt="【知识点总结】模拟电子技术（模电）"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>课堂笔记</span></a><a class="post-meta__tags" href="/tags/%E6%97%A5%E5%B8%B8/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>日常</span></a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>模拟电子技术（模电）</span></a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E7%94%B5/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>模电</span></a></div></div></div></div><h1 class="post-title">【知识点总结】模拟电子技术（模电）</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-wordcount"><span class="post-meta-separator"></span></span></div></div></div><div class="post-radius-bottom"></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h2 id="前言">前言</h2>
+<p><code>简介：</code></p>
+<p>大家好，接着之前的电路原理，现在我开始总结模拟电子技术，模电自我上大学以来一直都是意难平的存在，刚开课那会上课听不懂，作业写起来费劲，现如今回顾这一路上学到的知识，我对其有了更深刻的认识。所以本着“查缺补漏，哪科忘了学哪科”的理念，我要首先面对感觉比较麻烦的模电ψ(*｀ー´)ψ，以下便是我对模拟电子技术所学知识的理解与总结。<br>
+本人学艺不精，有一些知识点地方可能存在瑕疵，希望各位大佬可以多多指教。</p>
+<hr>
+<p><code>以下是本篇文章正文内容</code></p>
+<h2 id="第一章——半导体的基本知识">第一章——半导体的基本知识</h2>
+<h3 id="一-基本概念">一.基本概念</h3>
+<p>（1）<strong>本征半导体</strong>——化学成分纯净的半导体。它在物理结构上呈单晶体形态。<br>
+（2）<strong>空穴</strong>——共价键中的空位。<br>
+（3）<strong>电子空穴对</strong>——由热激发而产生的自由电子和空穴对。<br>
+（4）<strong>空穴的移动</strong>——空穴的运动是靠相邻共价键中的价电子依次填充空穴来实现的。<br>
+（5）<strong>N型半导体</strong>——掺入五价杂质元素（如磷）的半导体。<br>
+N型半导体中<strong>自由电子是多数载流子</strong>，它主要由杂质原子提供；空穴是少数载流子，由热激发形成。<br>
+（6）<strong>P型半导体</strong>——掺入三价杂质元素（如硼）的半导体。<br>
+在P型半导体中<strong>空穴是多数载流子</strong>，它主要由掺杂形成；自由电子是少数载流子， 由热激发形成。<br>
+（7）<strong>漂移运动</strong>——由<strong>电场作用</strong>引起的载流子的运动称为漂移运动。<br>
+（8）<strong>扩散运动</strong>——由<strong>载流子浓度差</strong>引起的载流子的运动称为扩散运动。</p>
+<h3 id="二-PN结的形成">二.PN结的形成</h3>
+<p>这一段解释起来比较麻烦，我尽量用最通俗易懂的话描述该过程。<br>
+首先，我们需要知道N型半导体中自由电子是多数载流子，而在P型半导体中空穴是多数载流子。当我们将N型半导体和P型半导体结合在一起时，<strong>电子和空穴均需从浓度高的区域向浓度低的区域扩散，即N型半导体中的自由电子往P型半导体中跑，P型半导体中的空穴往N型半导体中跑，从而使得原交界面处形成了一个空间电荷区（PN结）</strong>，其中靠近N型半导体的N区带 + 电，靠近P型半导体的P区带 - 电，可见形成了内电场，用于阻止载流子扩散。而内电场促使少子漂移，阻止多子扩散，最后,多子的扩散和少子的漂移达到动态平衡，形成平衡PN结。在空间电荷区，由于缺少多子，所以也称耗尽层。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3082fda0b308ae4abd6f01b8f9bcc558.png" alt="在这里插入图片描述"></p>
+<h3 id="三-PN结的特性">三.PN结的特性</h3>
+<h4 id="1-PN结的单向导电性">1.PN结的单向导电性</h4>
+<p>当外加电压使PN结中P区的电位高于N区的电位，称为加<strong>正向电压</strong>，简称正偏；反之称为加<strong>反向电压</strong>，简称反偏。<br>
+（1）<strong>PN结加正向电压时</strong>：低电阻、大的正向扩散电流。<br>
+（2）<strong>PN结加反向电压时</strong>：高电阻、很小的反向漂移电流。<br>
+由此可以得出结论：PN结具有<strong>单向导电性</strong>。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/0cfd64a0526c64ce3ff774c7681b8558.png" alt="在这里插入图片描述"></p>
+<h4 id="2-PN结的电容效应">2.PN结的电容效应</h4>
+<p><strong>扩散电容：</strong><br>
+当PN结处于正向偏置时，扩散运动使多数载流子穿过PN结，在对方区域PN结附近有高于正常情况时的电荷累积。存储电荷量的大小，取决于PN结上所加正向电压值的大小。离结越远，由于空穴与电子的复合，浓度将随之减小。<br>
+若外加正向电压有一增量△V，则相应的空穴（电子）扩散运动在结的附近产生一电荷增量△Q，二者之比△Q/△V为扩散电容Cd。</p>
+<h3 id="四-二极管的结构和主要参数">四.二极管的结构和主要参数</h3>
+<h4 id="1-二极管的结构">1.二极管的结构</h4>
+<p>点接触型二极管：PN结面积小，结电容小，用于检波和变频等高频电路。<br>
+面接触型二极管：PN结面积大，用于工频大电流整流电路。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3c4e6fe3594cbf01ac1add13fa48c2cb.png" alt="在这里插入图片描述"></p>
+<h4 id="2-二极管的主要参数">2.二极管的主要参数</h4>
+<p>最大整流电流IF、反向击穿电压Vbr、反向电流Ir、极间电容Cd、反向恢复时间。</p>
+<h3 id="五-二极管的基本电路分析方法及其应用">五.二极管的基本电路分析方法及其应用</h3>
+<p>二极管是一种非线性器件，因而其电路一般要采用非线性电路的分析方法。<br>
+（1）<strong>图解分析方法</strong><br>
+图解分析法较简单，但<strong>前提条件</strong>是已知二极管的 V -I 特性曲线。找出其工作交点即可。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/d8cf1eebb26e92b3214177c2b88d8685.png" alt="在这里插入图片描述"><br>
+（2）<strong>简化模型分析方法</strong><br>
+<strong>将指数模型分段线性化</strong>，得到二极管特性的等效模型，如采用小信号分析法等。vs =0 时, Q点称为静态工作点 ，反映直流时的工作状态。vs =Vmsinωt 时（Vm&lt;&lt;VDD）, 将Q点附近小范围内的 V-I 特性线性化，得到小信号模型，即以Q点为切点的一条直线。具体方法见“<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51130221/article/details/126498382">【知识点总结】电路原理 第二讲</a>”<br>
+应用：整流电路、限幅电路、开关电路。</p>
+<h2 id="第二章——BJT三极管">第二章——BJT三极管</h2>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/4546b12dee97f8bd69a542f009365a39.png" alt="在这里插入图片描述"></p>
+<h3 id="一-BJT的工作原理">一.BJT的工作原理</h3>
+<p>三极管的放大作用是在一定的外部条件控制下，通过载流子传输体现出来的。<br>
+<strong>外部条件：发射结正偏、 集电结反偏。</strong></p>
+<h4 id="1-内部载流子的传输过程">1.内部载流子的传输过程</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/40f1fc2cc88c81ca25c0fbe595aa928b.png" alt="在这里插入图片描述"></p>
+<h4 id="2-电流分配关系">2.电流分配关系</h4>
+<p>（1）电流放大系数 α<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/9bca81766c0d4512aa2fe17763947615.png" alt="在这里插入图片描述"><br>
+α 为电流放大系数。它只与管子的结构尺寸和掺杂浓度有关，与外加电压无关。一般 α = 0.9~0.99 。<br>
+（2）电流放大系数 β<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/a8dd8f44af1bb220ae7ba4a39c799543.png" alt="在这里插入图片描述"><br>
+β 是另一个电流放大系数。同样，它也只与管子的结构尺寸和掺杂浓度有关，与外加电压无关。一般 β &gt;&gt; 1 。</p>
+<h4 id="3-三极管的三种组态">3.三极管的三种组态</h4>
+<p>(a) 共基极接法，基极作为公共电极，用CB表示；<br>
+(b) 共发射极接法，发射极作为公共电极，用CE表示；<br>
+© 共集电极接法，集电极作为公共电极，用CC表示。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/97c07723fc103fc87f6aa94a7590ebdd.png" alt="在这里插入图片描述"><br>
+综上所述，三极管的放大作用，主要是依靠<strong>它的发射极电流能够通过基区传输，然后到达集电极而实现的。</strong><br>
+实现这一传输过程的两个条件是：<br>
+（1）<strong>内部条件</strong>：发射区杂质浓度远大于基区杂质浓度，且基区很薄。<br>
+（2）<strong>外部条件</strong>：发射结正向偏置，集电结反向偏置。</p>
+<h4 id="4-BJT的V-I-特性曲线">4.BJT的V-I 特性曲线</h4>
+<p>（1）<strong>输入特性曲线</strong><br>
+当vCE=0V时，相当于发射结的正向伏安特性曲线。当vCE≥1V时， vCB= vCE - vBE&gt;0，集电结已进入反偏状态，开始收集电子，基区复合减少，同样的vBE下 IB减小，特性曲线右移。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/1737f6df2cd5988dcd892c4a3bfbfdab.png" alt="在这里插入图片描述"><br>
+（2）<strong>输出特性曲线</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/733547ad3fa42468cabd7ea6f4a29343.png" alt="在这里插入图片描述"><br>
+输出特性曲线的三个区域:<br>
+**饱和区：**iC明显受vCE控制的区域，该区域内，一般vCE＜0.7V (硅管)。此时，发射结正偏，集电结正偏或反偏电压很小。<br>
+<strong>截止区</strong>：iC接近零的区域，相当iB=0的曲线的下方。此时， vBE小于死区电压。<br>
+<strong>放大区</strong>：iC平行于vCE轴的区域，曲线基本平行等距。此时，发射结正偏，集电结反偏。</p>
+<h4 id="5-BJT的主要参数">5.BJT的主要参数</h4>
+<p>（1）电流放大系数：上边介绍过当Icbo和Iceo很小时，二者可忽略不计。<br>
+（2）极间反向电流：发射极开路时，集电结的反向饱和电流Icbo、集电极发射极间的反向饱和电流Iceo。<br>
+（3）极限参数：集电极最大允许电流Icm、集电极最大允许功率损耗Pcm、V(BR)CBO——发射极开路时的集电结反向击穿电压、V(BR) EBO——集电极开路时发射结的反向击穿电压、V(BR)CEO——基极开路时集电极和发射极间的击穿电压。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/1d638500946ec529dc3d5d4e7011c567.png" alt="在这里插入图片描述"><br>
+当温度上升时，BJT的反向电流ICBO、ICEO及电流放大系数都会增大，而发射结正向压降VBE会减小。这些参数随温度的变化，都会使放大电路中的集电极静态电流ICQ随温度升高而增加（ICQ= β IBQ+ ICEO） ，从而使Q点随温度变化。 要想使ICQ基本稳定不变，就要求在温度升高时，电路能自动地适当减小基极电流IBQ 。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/4e1dc7d150823b1cfe452944dd228387.png" alt="在这里插入图片描述"></p>
+<h3 id="二-放大电路的分析方法">二.放大电路的分析方法</h3>
+<h4 id="1-图解分析法">1.图解分析法</h4>
+<p><strong>求解步骤：</strong><br>
+<strong>静态工作点的图解分析</strong>（采用该方法分析静态工作点，必须已知三极管的输入输出特性曲线。）：<br>
+（1）首先，画出直流通路；<br>
+（2）列输入回路方程；列输出回路方程（直流负载线）；<br>
+（3）在输入特性曲线上，作出直线vbe = Vbb - ibRb ，两线的交点即是Q点，得到IBQ；<br>
+（4）在输入特性曲线上，作出直线 Vce = Vcc - icRc ，两线的交点即是Q点，得到IBQ。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/8327e1e7d1f614ba50c24ac39a8b4bd8.png" alt="在这里插入图片描述"><br>
+**动态工作情况的图解分析：**根据vs的波形，在BJT的输入特性曲线图上画出vBE 、 iB 的波形，根据iB的变化范围在输出特性曲线图上画出iC和vCE 的波形。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/cb33e438beda1057108da021ca452b7b.png" alt="在这里插入图片描述"><br>
+<strong>若静态工作点选择不当，可能会导致截止失真或饱和失真。</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/61e7fe02560fb5410ce1abdb815b155a.png" alt="在这里插入图片描述"><br>
+图解分析法的适用范围：<strong>幅度较大而工作频率不太高的情况。</strong><br>
+**优点：**直观、形象。有助于建立和理解交、直流共存，静态和动态等重要概念；有助于理解正确选择电路参数、合理设置静态工作点的重要性。能全面地分析放大电路的静态、动态工作情况。<br>
+**缺点：**不能分析工作频率较高时的电路工作状态，也不能用来分析放大电路的输入电阻、输出电阻等动态性能指标。</p>
+<h4 id="2-小信号模型分析法">2.小信号模型分析法</h4>
+<p><strong>建立小信号模型的思路</strong>：当放大电路的输入信号电压很小时，就可以把三极管小范围内的特性曲线近似地用直线来代替，从而可以把三极管这个非线性器件所组成的电路当作线性电路来处理。详细见“<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51130221/article/details/126498382">【知识点总结】电路原理 第二讲</a>”<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/76169aeab1093c9466e8fdf0827a1dfc.png" alt="在这里插入图片描述"><br>
+受控电流源hfeib ，反映了BJT的基极电流对集电极电流的控制作用。电流源的流向由ib的流向决定。hre vce是一个受控电压源。反映了BJT输出回路电压对输入回路的影响。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/9e2c86b69a8897c88baabb89d7ca66ea.png" alt="在这里插入图片描述"><br>
+<strong>注</strong>：H参数都是小信号参数，即微变参数或交流参数；H参数与工作点有关，在放大区基本不变；H参数都是微变参数，所以只适合对交流信号的分析。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/f7ccc4a0c6008d031f7f5aefdc8a9e49.png" alt="在这里插入图片描述"><br>
+<strong>求解步骤：</strong><br>
+用H参数小信号模型分析基本共射极放大电路：<br>
+（1）利用直流通路求Q点；<br>
+（2）画小信号等效电路；<br>
+（3）求放大电路动态指标，如电压增益、输入电阻、输出电阻。<br>
+<strong>小信号模型分析法的优缺点：</strong><br>
+**优点：**分析放大电路的动态性能指标(Av 、Ri和Ro等)非常方便，且适用于频率较高时的分析。<br>
+**缺点：**在BJT与放大电路的小信号等效电路中，电压、电流等电量及BJT的H参数均是针对变化量(交流量)而言的，不能用来分析计算静态工作点。</p>
+<h3 id="三-基本共射极放大电路、共集电极放大电路和共基极放大电路">三.基本共射极放大电路、共集电极放大电路和共基极放大电路</h3>
+<h4 id="1-基本共射极放大电路">1.基本共射极放大电路</h4>
+<p>（1）<strong>静态(直流工作状态)</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/33aaf247cfe72251c59d0dd97ae1abd0.png" alt="在这里插入图片描述"><br>
+（2）**动态：**输入正弦信号vs后，电路将处在动态工作情况。此时，BJT各极电流及电压都将在静态值的基础上随输入信号作相应的变化。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/b5ac45f14beb37ecd4f8cd255e81b095.png" alt="在这里插入图片描述"></p>
+<h4 id="2-共集电极放大电路（射极输出器）">2.共集电极放大电路（射极输出器）</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/af392c442640200393801ad0fdc2ee1a.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/4daceee493c18d2158af1553db4fa40d.png" alt="在这里插入图片描述"><br>
+注：（以上不列举具体公式）<br>
+<strong>共集电极电路特点</strong>：<br>
+（1）电压增益小于1但接近于1，vo 与 vi同相。<br>
+（2）输入电阻大，对电压信号源衰减小。<br>
+（3）输出电阻小，带负载能力强。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/0e7b353d613f6a3523496b07e68788d4.png" alt="在这里插入图片描述"></p>
+<h4 id="3-共基极放大电路">3.共基极放大电路</h4>
+<p>直流通路与射极偏置电路相同。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/662270b28987e953572d1d5885330995.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/c46038e325ea7ecd1f49f018cdab0927.png" alt="在这里插入图片描述"></p>
+<h4 id="4-三种组态的判别">4.三种组态的判别</h4>
+<p>以输入、输出信号的位置为判断依据：<br>
+信号由基极输入，集电极输出——<strong>共射极放大电路</strong><br>
+信号由基极输入，发射极输出——<strong>共集电极放大电路</strong><br>
+信号由发射极输入，集电极输出——<strong>共基极电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/65e8bbd8cad71681820a69dee64163e1.png" alt="在这里插入图片描述"><br>
+三种组态的<strong>特点及用途</strong>：<br>
+<strong>共射极放大电路：</strong><br>
+电压和电流增益都大于1，输入电阻在三种组态中居中，输出电阻与集电极电阻有很大关系。适用于低频情况下，作多级放大电路的中间级。<br>
+<strong>共集电极放大电路：</strong><br>
+只有电流放大作用，没有电压放大，有电压跟随作用。在三种组态中，输入电阻最高，输出电阻最小，频率特性好。可用于输入级、输出级或缓冲级。<br>
+<strong>共基极放大电路：</strong><br>
+只有电压放大作用，没有电流放大，有电流跟随作用，输入电阻小，输出电阻与集电极电阻有关。高频特性较好，常用于高频或宽频带低输入阻抗的场合，模拟集成电路中亦兼有电位移动的功能。</p>
+<h3 id="四-射极偏置电路">四.射极偏置电路</h3>
+<p><strong>基极分压式射极偏置电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/4f54bbbfc3c15ce1da7da66e7d5696d0.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/f190d7e539e96617f9af705ff997429c.png" alt="在这里插入图片描述"><br>
+<em><strong>注：（以上不列举具体公式）</strong></em><br>
+除此之外，还有含有<strong>双电源的射极偏置电路、含有恒流源的射极偏置电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/0ac9fc27806b4d243372b24050bca48b.png" alt="在这里插入图片描述"></p>
+<h3 id="五-组合放大电路">五.组合放大电路</h3>
+<p>组合放大电路总的电压增益等于组成它的各级单管放大电路<strong>电压增益的乘积</strong>。前一级的输出电压是后一级的输入电压，后一级的输入电阻是前一级的负载电阻RL。</p>
+<h2 id="第三章——MOS场效应管">第三章——MOS场效应管</h2>
+<h3 id="一-场效应管的分类：">一.场效应管的分类：</h3>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/a794a4d1df7bddcd6d2bd22556f74a83.png" alt="在这里插入图片描述"><br>
+**耗尽型：**场效应管没有加偏置电压时，就有导电沟道存在。<br>
+**增强型：**场效应管没有加偏置电压时，没有导电沟道。</p>
+<h4 id="1-N沟道增强型MOSFET">1.N沟道增强型MOSFET</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/abb535abfb9547e406a00362ab93e3e0.png" alt="在这里插入图片描述"></p>
+<p><strong>工作原理：</strong><br>
+（1）vGS对沟道的控制作用：<br>
+当vGS≤0时：无导电沟道，d、s间加电压时，也无电流产生。<br>
+当0&lt;vGS &lt;VT 时：产生电场，但未形成导电沟道（感生沟道），d、s间加电压后，没有电流产生。<br>
+当vGS≥VT 时：在电场作用下产生导电沟道，d、s间加电压后，将有电流产生。<br>
+vGS越大，导电沟道越厚，其中VT 称为开启电压。<br>
+（2）vDS对沟道的控制作用：当vGS一定（vGS &gt;VT ）时，vDS变大↑ → 使iD变大↑ → 从而使沟道电位梯度升高 → 靠近漏极d处的电位升高 → 电场强度减小 → 沟道变薄，整个沟道呈楔形分布。当vDS增加到使vGD=VT 时，在紧靠漏极处出现预夹断。在预夹断处：vGD = vGS - vDS = VT，预夹断后，vDS↑ → 夹断区延长 → 沟道电阻↑ → iD基本不变。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/b3968a578abce2cce94c2079c741bb78.png" alt="在这里插入图片描述"><br>
+**☆☆注：**若vDS和vGS同时作用时，假设vDS一定，vGS变化时，给定一个vGS ，就有一条不同的 iD – vDS 曲线。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/fd0c0de7bf9a37217267f9c72e6189b1.png" alt="在这里插入图片描述"><br>
+**① 截止区：**当vGS＜VT时，导电沟道尚未形成，iD＝0，为截止工作状态。<br>
+<strong>② 可变电阻区</strong>：vDS≤（vGS－VT）时，rdso是一个受vGS控制的可变电阻。<br>
+<strong>③ 饱和区</strong>：vGS &gt;VT ，且vDS≥（vGS－VT）</p>
+<h4 id="2-N沟道耗尽型MOSFET">2.N沟道耗尽型MOSFET</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/aca727864b074e678413a9955623edc3.png" alt="在这里插入图片描述"><br>
+二氧化硅绝缘层中掺有大量的正离子，可以在正或负的栅源电压下工作，而且基本上无栅流。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/58964d7a0e763d4b7a0f0abbcefb623a.png" alt="在这里插入图片描述"></p>
+<h4 id="3-P沟道MOSFET">3.P沟道MOSFET</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/e55aaf4b6baabcd225c14c00d1e820b9.png" alt="在这里插入图片描述"></p>
+<h3 id="二-MOSFET的主要参数">二.MOSFET的主要参数</h3>
+<p><strong>直流参数：</strong><br>
+（1）开启电压VT （增强型参数）<br>
+（2）夹断电压VP （耗尽型参数）<br>
+（3）饱和漏电流IDSS （耗尽型参数）<br>
+（4）直流输入电阻RGS （109Ω～1015Ω ）<br>
+**交流参数：**输出电阻rds、低频互导gm<br>
+**极限参数：**最大漏极电流IDM、最大耗散功率PDM、最大漏源电压V（BR）DS、最大栅源电压V（BR）GS</p>
+<h3 id="三-MOSFET放大电路的分析与计算">三.MOSFET放大电路的分析与计算</h3>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/6e3cada4a06cd12d1073c52774892999.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/07804555abc3154ed25c5a5c412ff98a.png" alt="在这里插入图片描述"><br>
+<strong>计算步骤：</strong><br>
+（1）直流偏置及静态工作点的计算<br>
+（2）图解分析<br>
+（3）小信号模型分析</p>
+<h3 id="四-各种放大器件电路性能比较">四.各种放大器件电路性能比较</h3>
+<p>mos 管利用栅源之间的电压 vgs 控制漏极电流，BJT利用基射极间的电压 vbe 控制集电极的电流 ic。但在放大区，mos管的 id 与 vgs 之间是平方律关系，而 BJT 的 ic 与 vbe 之间是指数关系，显然，指数关系更为敏感。故称 <strong>mos 管为电压控制器件，BJT 为电流控制器件。</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3149d6e3d68e6f36788d4db65f543021.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/19de70af02f75056778c925ad365094d.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/5daa18872cf98d5dbcc549132e21fe57.png" alt="在这里插入图片描述"></p>
+<h2 id="第四章——模拟集成电路">第四章——模拟集成电路</h2>
+<h3 id="一-电流源">一.电流源</h3>
+<p>电流源可分为 <strong>BJT 电流源电路和 FET 电流源</strong><br>
+（1）<strong>BJT 电流源电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/c02a87b55129f2e67b6b0627c9441344.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/c4e2064e8f6ed157306cf16b84b29de7.png" alt="在这里插入图片描述"><br>
+在4中，T1、R1 和T4支路产生基准电流IREF，T1和T2、T4和T5构成镜像电流源，T1和T3，T4和T6构成了微电流源。<br>
+（2） <strong>FET 电流源</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/be5f9adf077e46a412d4acce5484dd3a.png" alt="在这里插入图片描述"></p>
+<h3 id="二-差分式放大电路">二.差分式放大电路</h3>
+<h4 id="1-结构及相关概念">1.结构及相关概念</h4>
+<p>（1）差模信号：vid = vi1 - vi2，差模信号相当于两个输入端信号中不同的部分<br>
+（2）共模信号：vic = 0.5 * （vi1 + vi2），共模信号相当于两个输入端信号中相同的部分<br>
+（3）差模电压增益：Avd = vo’ / vid<br>
+（4）共模电压增益：Avc = vo” / vic<br>
+（5）共模抑制比：Kcmr = Avd / Avc ，其反映抑制零漂能力<br>
+vo’ ——差模信号产生的输出， vo” ——共模信号产生的输出，两输入端中的共模信号大小相等，相位相同；差模信号大小相等，相位相反。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/747a910f565484dcaa99a951fb7757df.png" alt="在这里插入图片描述"></p>
+<h4 id="2-射极耦合差分式放大电路">2.射极耦合差分式放大电路</h4>
+<p>（1）<strong>工作原理</strong>：<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/b429bf610f72d1c83454b687503218bf.png" alt="在这里插入图片描述"><br>
+动态时，当输入共模信号，共模信号的输入使两管集电极电压有相同的变化，voc = vo1 - vo2 = 0，共模增益Avc = 0。当输入差模信号，vi1 和 vi2 大小相等，相位相反。vo1 和 vo2 大小相等，相位相反。vo = vo1 - vo2 ≠ 0，信号被放大。<br>
+（2）**抑制零点漂移原理：**当温度变化和电源电压波动，都将使集电极电流产生变化。且变化趋势是相同的，其效果相当于在两个输入端加入了共模信号，以双倍的元器件换取抑制零漂的能力。</p>
+<h4 id="3-差分式放大电路的传输特性曲线">3.差分式放大电路的传输特性曲线</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/6503ed7340d8b700fd453bc1b855b288.png" alt="在这里插入图片描述"></p>
+<h3 id="三-集成电路运算放大器">三.集成电路运算放大器</h3>
+<h4 id="1-实际集成运放的主要参数">1.实际集成运放的主要参数</h4>
+<p><strong>输入直流误差特性（输入失调特性）：</strong><br>
+（1）输入失调电压VIO：在室温（25℃）及标准电源电压下，输入电压为零时，为了使集成运放的输出电压为零，在输入端加的补偿电压叫做失调电压VIO。<br>
+（2）输入偏置电流IIB：输入偏置电流是指集成运放两个输入端静态电流的平均值。<br>
+（3）输入失调电流IIO：输入失调电流IIO是指当输入电压为零时流入放大器两输入端的静态基极电流之差。<br>
+（4）温度漂移：分为输入失调电压温漂、输入失调电流温漂。<br>
+<strong>差模特性：</strong><br>
+（1）开环差模电压增益Avo<br>
+（2）开环带宽BW (fH)<br>
+（3）单位增益带宽 BWG (fT)<br>
+（4）差模输入电阻rid和输出电阻ro<br>
+（5）最大差模输入电压Vidmax<br>
+<strong>共模特性：</strong><br>
+（1）共模抑制比KCMR和共模输入电阻ric<br>
+（2）最大共模输入电压Vicmax<br>
+**大信号动态特性：**转换速率SR、全功率带宽BWP<br>
+**电源特性：**电源电压抑制比KSVR、静态功耗PV</p>
+<h3 id="四-集成运放应用中的实际问题">四.集成运放应用中的实际问题</h3>
+<h4 id="1-失调电压VIO、失调电流IIO和偏置电流IIB带来的误差">1.失调电压VIO、失调电流IIO和偏置电流IIB带来的误差</h4>
+<p>其**特点：**时间越长，误差越大，且易使输出进入饱和状态。<strong>解决方案</strong>——调零补偿<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/7ef7432acd00d61b5d9787fd51e37ca3.png" alt="在这里插入图片描述"></p>
+<h4 id="2-放大电路中的噪声与干扰">2.放大电路中的噪声与干扰</h4>
+<p>（1）<strong>噪声的种类及性质:</strong><br>
+<strong>电阻的热噪声</strong>——由电子无规则热运动而产生随时间而变化的电压称为热噪声电压。其本身是一个非周期变化的时间函数，它的频率范围是很宽广的。因而噪声电压Vn将随放大电路带宽的增加而增加。所以在设计放大电路时要综合考虑增益、带宽等诸多因素。<br>
+<strong>三极管的噪声</strong>——分为热噪声、散粒噪声、闪砾噪声。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/833d5ff40eb526e17eb422f1eb7d370f.png" alt="在这里插入图片描述"><br>
+（2）**减小噪声的措施：**选低噪声集成运放，如OP-27，AD745等；采用滤波处理或引入负反馈以抑制噪声；转换为数字信号后，借助软件方法，对数据进行处理以减小噪声的影响。<br>
+（3）<strong>放大电路中的干扰：</strong><br>
+<strong>①杂散电磁场干扰</strong>——电路工作环境一般有许多电磁干扰源，常见的有工频干扰、无线电台及雷电现象等，它们所产生电磁波或尖峰脉冲，通过接线电容耦合、电感耦合或交流电源线等进入放大电路，从而引入干扰电压。<br>
+**抑制措施：<strong>合理布局、屏蔽<br>
+<strong>②由直流电源电压波动引起的干扰</strong>——直流电源输出的50Hz或100Hz的纹波电压使电路的电流产生波动而形成干扰电压。第一级的波动将被后续各级放大而使输出端产生较大的干扰电压。</strong><br>
+抑制措施：**采用性能好的稳压电源供电，并在稳压电路的输入端和输出端分别加一足够大的电解电容或钽电容的滤波电路。对于运算放大器，可在电源引脚和地端间加一钽电容（10μF～30μF）防止低频干扰，加一独石电容（0.01μF～0.1μF）防止高频干扰。<br>
+<strong>③由交流电源串入的干扰和抑制、由接地点安排不正确而引起的干扰和正确接地。</strong></p>
+<h2 id="第五章——反馈放大电路">第五章——反馈放大电路</h2>
+<h3 id="一-反馈的基本概念与分类">一.反馈的基本概念与分类</h3>
+<p>关于开环、闭环的概念在<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51130221/article/details/125953063">【知识点总结】电路原理 第一讲</a>有所涉及，在此不重复说明。</p>
+<h4 id="1-直流反馈与交流反馈">1.直流反馈与交流反馈</h4>
+<p>根据反馈到输入端的信号是交流，还是直流，或同时存在，来进行判别。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3f8924c65281f88cc3edde7c00a02234.png" alt="在这里插入图片描述"></p>
+<h4 id="2-正反馈与负反馈">2.正反馈与负反馈</h4>
+<p><strong>净输入量可以是电压，也可以是电流。</strong><br>
+从输出端看<br>
+正反馈：输入量不变时，引入反馈后输出量变大了。<br>
+负反馈：输入量不变时，引入反馈后输出量变小了。<br>
+从输入端看<br>
+正反馈：引入反馈后，使净输入量变大了。<br>
+负反馈：引入反馈后，使净输入量变小了。<br>
+**判别方法：**瞬时极性法。即在电路中，从输入端开始，沿着 信号流向，标出某一时刻有关节点电压变化的斜率（正斜率或负斜率，用“+”、“-”号表示）。</p>
+<h4 id="3-串联反馈与并联反馈">3.串联反馈与并联反馈</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/1615fa3c1d86f33794b35726891613eb.png" alt="在这里插入图片描述"></p>
+<h4 id="4-电压反馈与电流反馈">4.电压反馈与电流反馈</h4>
+<p>电压反馈与电流反馈由反馈网络在放大电路输出端的取样对象决定。<br>
+**电压反馈：**反馈信号xf和输出电压成比例，即 xf = Fvo，电压负反馈稳定输出电压。<br>
+**电流反馈：**反馈信号xf与输出电流成比例，即 xf = Fio ，电流负反馈稳定输出电流。<br>
+<strong>判断方法：负载短路法</strong>——将负载短路（未接负载时输出对地短路），反馈量为零——电压反馈；若反馈量仍然存在——电流反馈。</p>
+<h3 id="二-负反馈放大电路的四种组态">二.负反馈放大电路的四种组态</h3>
+<h4 id="1-四种组态">1.四种组态</h4>
+<p>（1）<strong>电压串联负反馈放大电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/881ee659e198e9856dcd337ca4a61f71.png" alt="在这里插入图片描述"><br>
+（2）<strong>电压并联负反馈放大电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/a3dbb4a43ec4737f42d7a9a19d65045a.png" alt="在这里插入图片描述"><br>
+（3）<strong>电流串联负反馈放大电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/5053205d568ef4aa3eeab0c5e5d58e9b.png" alt="在这里插入图片描述"><br>
+（4）<strong>电流并联负反馈放大电路</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/db521789a61fcbb6530d046bfb69242c.png" alt="在这里插入图片描述"></p>
+<h4 id="2-四种组态特点小结">2.四种组态特点小结</h4>
+<p>（1）<strong>串联反馈</strong>：输入端电压求和（KVL）<br>
+（2）<strong>并联反馈</strong>：输入端电流求和（KCL）<br>
+（3）<strong>电压负反馈</strong>：稳定输出电压，具有恒压特性<br>
+（4）<strong>电流负反馈</strong>：稳定输出电流，具有恒流特性</p>
+<h4 id="3-信号源对反馈效果的影响">3.信号源对反馈效果的影响</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/5618e50d223f233074633b658c3113c6.png" alt="在这里插入图片描述"></p>
+<h3 id="三-负反馈放大电路增益的一般表达式">三.负反馈放大电路增益的一般表达式</h3>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/ac6df28f73b0248e7f0225dd65295b46.png" alt="在这里插入图片描述"><br>
+**反馈深度讨论：**一般情况下，A和F都是频率的函数，其中（1 + AF）为反馈深度，当（1 + AF） &gt; 1 时为一般负反馈；若当（1 + AF） &gt;&gt; 1 时为深度负反馈；若当（1 + AF） &lt; 1 时为正反馈；当（1 + AF） =0 时为自激振荡。</p>
+<h3 id="四-负反馈对放大电路性能的影响">四.负反馈对放大电路性能的影响</h3>
+<p><strong>（1）提高增益的稳定性</strong>——闭环增益相对变化量是开环时的1 / （1 + AF）倍。闭环增益只取决于反馈网络。当反馈网络由稳定的线性元件组成时，闭环增益将有很高的稳定性。此次之外，负反馈的组态不同，稳定的增益不同。<br>
+<strong>（2）减小非线性失真</strong>——闭环时增益减小，线性度变好。不过其只能减少环内放大电路产生的失真，如果输入波形本身就是失真的，即使引入负反馈，也无济于事。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/e39cc2d4d404dc7284ed4220c2fcc2c8.png" alt="在这里插入图片描述"><br>
+<strong>（3）抑制反馈环内噪声</strong><br>
+<strong>（4）展宽放大电路的通频带</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/34d58dbd5600a8a2123a0b69afa85e49.png" alt="在这里插入图片描述"><br>
+<strong>（5）对输入电阻和输出电阻的影响：</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/e638ac9ef08dcc0b5ae1f108c6f75036.png" alt="在这里插入图片描述"><br>
+<strong>负反馈对放大电路性能的改善，是以牺牲增益为代价的，且仅对环内的性能产生影响。</strong><br>
+<strong>注意:</strong> 反馈对输入电阻的影响仅限于环内，对环外不产生影响。</p>
+<h3 id="五-设计负反馈放大电路的一般步骤">五.设计负反馈放大电路的一般步骤</h3>
+<p>（1）<strong>选定需要的反馈类型</strong>——信号源性质、对输出信号的要求、对输入、输出电阻的要求、对信号变换的要求（V-V、V-I、I-V、I-I ）。<br>
+（2）<strong>确定反馈系数的大小</strong>。<br>
+（3）<strong>适当选择反馈网络中的电阻阻值</strong>——尽量减小反馈网络对基本放大电路的负载效应。<br>
+（4）<strong>通过仿真分析，检验设计是否满足要求。</strong></p>
+<h3 id="六-负反馈放大电路的稳定性（自激振荡及稳定工作的条件）">六.负反馈放大电路的稳定性（自激振荡及稳定工作的条件）</h3>
+<p>自激振荡<strong>现象</strong>：在不加任何输入信号的情况下，放大电路仍会产生一定频率的信号输出。</p>
+<h4 id="1-产生原因及条件">1.产生原因及条件</h4>
+<p>**产生原因：**A 和 F 在高频区或低频区产生的附加相移达到180，使中频区的负反馈在高频区或低频区变成了正反馈，当满足了一定的幅值条件时，便产生自激振荡。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3c70b846b6bf8ffa3cfea8bbd440640d.png" alt="在这里插入图片描述"></p>
+<h4 id="2-稳定工作条件">2.稳定工作条件</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/fe2b226ec95bc62ea95af51bef10d17c.png" alt="在这里插入图片描述"></p>
+<h4 id="3-负反馈放大电路稳定性分析">3.负反馈放大电路稳定性分析</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/582d287425faf26def8b97641d20b14e.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/7a261294e7dbdb2d1b4e12de5f777bf3.png" alt="在这里插入图片描述"></p>
+<h2 id="第六章——功率放大电路">第六章——功率放大电路</h2>
+<p><strong>功率放大电路</strong>是一种以输出较大功率为目的的放大电路。因此，要求同时输出较大的电压和电流。管子工作在接近极限状态，<strong>一般用于直接驱动负载，带载能力要强。</strong><br>
+根据<strong>正弦信号整个周期内三极管的导通情况</strong>划分：<br>
+（1）<strong>甲类</strong>：一个周期内均导通<br>
+（2）<strong>乙类</strong>：导通角等于180°<br>
+（3）<strong>甲乙类</strong>：导通角大于180°<br>
+（4）<strong>丙类</strong>：导通角小于180°</p>
+<h3 id="一-甲类功放">一.甲类功放</h3>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/1b75b5ee35559240bacae0070d47a51c.png" alt="在这里插入图片描述"><br>
+**特点：**电压增益近似为1，电流增益很大，可获得较大的功率增益，输出电阻小，带负载能力强。，但其效率低。</p>
+<h3 id="二-乙类功放——双电源互补对称功率放大电路（效率高）">二.乙类功放——双电源互补对称功率放大电路（效率高）</h3>
+<h4 id="1-电路组成">1.电路组成</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/737c8c6aa8083697394822f7989fc370.png" alt="在这里插入图片描述"><br>
+由一对 NPN、PNP 特性相同的互补三极管组成，采用正、负双电源供电。这种电路也称为OCL互补功率放大电路。</p>
+<h4 id="2-工作原理">2.工作原理</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/ae0089bd0bd4051b0ed94af6d82c4a23.png" alt="在这里插入图片描述"><br>
+两个三极管在信号正、负半周轮流导通，使负载得到一个完整的波形。</p>
+<h3 id="三-甲乙类功放——互补对称功率放大电路">三.甲乙类功放——互补对称功率放大电路</h3>
+<p><strong>乙类互补对称电路存在的问题</strong>——可能会出现交越失真。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3480a6318286794bea1ee375fc04c13d.png" alt="在这里插入图片描述"><br>
+甲乙类互补对称功率放大电路的结构与工作原理：<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/a75874efd3d8b986538ce51345b86a4c.png" alt="在这里插入图片描述"><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/003c5187b58f5063d1b27634d3009f38.png" alt="在这里插入图片描述"></p>
+<h2 id="第七章——信号处理与信号产生电路">第七章——信号处理与信号产生电路</h2>
+<p><strong>基本概念</strong><br>
+（1）<strong>滤波器</strong>——是一种能使有用频率信号通过而同时抑制或衰减无用频率信号的电子装置。<br>
+（2）<strong>有源滤波器</strong>——由有源器件构成的滤波器。</p>
+<h3 id="一-有源滤波电路">一.有源滤波电路</h3>
+<p>（1）二阶有源低通滤波电路<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/e7b2bea2b80f8371db505e1b465554a4.png" alt="在这里插入图片描述"><br>
+（2）二阶有源低通滤波电路<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/ff5e1bc010f63f08d0bfd3b1a6a8c8dc.png" alt="在这里插入图片描述"><br>
+（3）有源带通滤波电路<br>
+工作原理：低通与高通相串联即可得到带通滤波电路，相当于“与”的关系。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/d964dc6a1bfc38344fc00731ebc09688.png" alt="在这里插入图片描述"><br>
+（4）二阶有源带阻滤波电路<br>
+工作原理：低通与高通相并联即可得到带阻滤波电路，相当于“或”的关系。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/e3baba8c4cf0820319f916bda694bfed.png" alt="在这里插入图片描述"></p>
+<h3 id="二-正弦波振荡电路">二.正弦波振荡电路</h3>
+<p><strong>基本组成：<strong>放大电路（包括负反馈放大电路）、反馈网络（构成正反馈的）、选频网络（选择满足相位平衡条件的一个频率。经常与反馈网络合二为一）、稳幅环节。<br>
+<strong>振荡条件：</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/a178b244d42d0971feac03caf82ff777.png" alt="在这里插入图片描述"><br>
+振荡电路是单口网络，无需输入信号就能起振，起振的信号源来自</strong>电路器件内部噪声以及电源接通扰动</strong>噪声中，满足相位平衡条件的某一频率0的噪声信号被放大，成为振荡电路的输出信号。当输出信号幅值增加到一定程度时，就要限制它继续增加，否则波形将出现失真。<strong>稳幅的作用</strong>就是，当输出信号幅值增加到一定程度时，使振幅平衡条件从 AF &gt; 1 回到 AF = 1。</p>
+<h3 id="三-RC正弦波振荡电路">三.RC正弦波振荡电路</h3>
+<p><strong>振荡电路工作原理：</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/9cd141ebec56f41fb03035520e6d0e99.png" alt="在这里插入图片描述"><br>
+反馈网络兼做选频网络。<br>
+**稳幅措施：**可采用热敏元件、场效应管（JFET）、二极管进行稳幅。</p>
+<h3 id="四-LC正弦波振荡电路">四.LC正弦波振荡电路</h3>
+<p>（1）变压器反馈式LC振荡电路:<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/7ce585e8d86ad6788bdddf3444332b6b.png" alt="在这里插入图片描述"><br>
+三点式LC振荡电路：可分为三点式LC并联电路、电感三点式振荡电路、电容三点式振荡电路。<br>
+（2）**石英晶体振荡电路：**将石英放置在极板间，并加以电场，晶体机械变形。若在极板间加机械力，晶体将产生电场，这就是压电效应。交变电压 → 机械振动 → 交变电压。其机械振动的固有频率与晶片尺寸有关，稳定性高，当交变电压频率 = 固有频率时，振幅最大，即压电谐振。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/90763eccf08556fd3e06fc574f0fc83b.png" alt="在这里插入图片描述"></p>
+<h3 id="五-电压比较器">五.电压比较器</h3>
+<h4 id="1-单门限电压比较器">1.单门限电压比较器</h4>
+<p>**特点：**开环，虚短不成立，增益A0大于105，- VCC ≤ vO ≤ + VCC。运算放大器工作在非线性状态下。<br>
+（1）<strong>过零比较器</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/a977dda83c25ff0d90d2568fa2f619ea.png" alt="在这里插入图片描述"><br>
+若输入为正负对称的正弦波时，输出为方波。<br>
+（2）<strong>门限电压不为零的比较器</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/b8687e60fe95a429535cc7b629e88de3.png" alt="在这里插入图片描述"></p>
+<h4 id="2-迟滞比较器">2.迟滞比较器</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/757baed22176bf3354dffa38cf750801.png" alt="在这里插入图片描述"><br>
+**工作原理：**设 vp 为门限电压，对该电路计算可得上述式子（可将 VT 看为 vp ）。若反向输入端电压 vI &gt; vp ，则输出 vo 为低电平，若反向输入端电压 vI &lt; vp ，则输出 vo 为高电平。<br>
+<strong>除此之外，应注意“迟滞”的含义</strong>，在上门限电压与下门限电压之间存在着迟滞区域。若反向输入端电压一开始 vI &lt; vp ，而后不断增大 vI 的值，只有当其高于上门限电压时，即 vI &gt; vp时电平翻转成低电平。同理，若反向输入端电压一开始 vI &gt; vp ，而后不断减小 vI 的值，只有当其低于下门限电压时，即 vI &lt; vp 时，电平翻转成高电平。<br>
+**☆☆☆注意：**此时不是负反馈，故不能用虚短虚断的结论。</p>
+<h4 id="3-小结">3.小结</h4>
+<p>通过上述几种电压比较器的分析，可得出如下结论：<br>
+（1）用于电压比较器的运放，通常工作在开环或正反馈状态和非线性区，其输出电压只有高电平VOH和低电平VOL两种情况。<br>
+（2）一般用电压传输特性来描述输出电压与输入电压的函数关系。<br>
+（3）电压传输特性的关键要素：输出电压的高电平VOH和低电平VOL、门限电压、输出电压的跳变方向。<br>
+令vP＝vN所求出的vI就是门限电压。vI等于门限电压时输出电压发生跳变。跳变方向取决于是同相输入方式还是反相输入方式。</p>
+<h3 id="六-非正弦波振荡电路">六.非正弦波振荡电路</h3>
+<h4 id="1-方波产生电路（多谐振荡电路）">1.方波产生电路（多谐振荡电路）</h4>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/c0043e37a09bb65c20f71cc0e907c728.png" alt="在这里插入图片描述"><br>
+该方案利用了<strong>电容充放电</strong>的原理，当反向输入端的 vc 小于同相输入端的电压时，输出 vo 为高电平VOH，同时其沿着Rf给电容充电，使反向输入端的 vc 电位升高，而当反向输入端的 vc 大于同相输入端的电压时，输出 vo 为低电平VOL，同时电容沿着Rf进行放电，使反向输入端的 vc 电位下降，当反向输入端的 vc 小于同相输入端的电压时，重新开始循环，如此反复，便可在电压输出端得到方波。<strong>稳压管的作用是双向限幅，对电压进行限位。</strong><br>
+占空比可变的方波产生电路：原理是<strong>增设了二极管、 Rf1 和 Rf2</strong> 来改变<strong>充放电时间</strong>从而改变占空比。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/20aa253a5caf609302bb34cb52b037e9.png" alt="在这里插入图片描述"></p>
+<h4 id="2-锯齿波产生电路">2.锯齿波产生电路</h4>
+<p>其由<strong>同相输入迟滞比较器、积分电路</strong>等组成，由迟滞比较器，产生方波，利用积分电路，对其进行积分，产生的信号作为电压比较器同相端电压的输入。其中<strong>双向稳压管的作用是双向限幅，对电压进行限位。</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/7dc51161b40ba54577c69a413c4930f9.png" alt="在这里插入图片描述"></p>
+<h2 id="第八章——直流稳压电源">第八章——直流稳压电源</h2>
+<h3 id="一-单相桥式整流电路">一.单相桥式整流电路</h3>
+<p><strong>工作原理：<strong>利用二极管的</strong>单向导电性</strong><br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/ed4a5197b9b4f297e3d585bd63456d06.png" alt="在这里插入图片描述"><br>
+若通过变压器输出的 v2 在正半周期，D1、D3导通，在负半周期，D2、D4导通，平均下来其负载端电压电流就为正向电压电流，实现整流（交流→直流）。<br>
+参数计算：<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/945e7dd329f46173f931678cb9bcdc6c.png" alt="在这里插入图片描述"></p>
+<h3 id="二-滤波电路">二.滤波电路</h3>
+<p><img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/d59ab5e33a9a910bfeca360ea5cdc61d.png" alt="在这里插入图片描述"><br>
+电容滤波<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/3e44aad20a410bac11eaad47a3e89f6b.png" alt="在这里插入图片描述"><br>
+电容具有储能滤波的功能，可对波动信号进行<strong>消抖和滤波</strong>，并具有以下<strong>特点</strong>：<br>
+（1）二极管的导电角 θ &lt; π ，流过二极管的瞬时电流很大。<br>
+（2）负载直流平均电压 VL 升高， τd = RC越大，VL越高。<br>
+（3）直流电压 VL 随负载电流增加而减少。<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/153f990b1df1e871620c2053771ec773.png" alt="在这里插入图片描述"><br>
+电感滤波<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/eaab339b56f9a4f88e3dde4a62f1b345.png" alt="在这里插入图片描述"></p>
+<h3 id="三-串联反馈式稳压电路">三.串联反馈式稳压电路</h3>
+<p>工作原理：<br>
+<img src= "" data-lazy-src="https://i-blog.csdnimg.cn/blog_migrate/9e0f72ead30dbea55d29736ad0e05f91.png" alt="在这里插入图片描述"><br>
+除此之外还有三端集成稳压器，如正电压 78XX 、负电压 79XX等</p>
+<h2 id="总结">总结</h2>
+<p><code>小小的总结：</code></p>
+<p>又完成一门，历时近一周终于完成了，由于知识有些久远，无法找到我之前记录的笔记(ಥ_ಥ) ，所以总结起来费了不少力气，不过感觉累并快乐着，不断回顾总结，让我对知识的理解有所加深。下一次我将更新数字电路，接着就是自动控制原理、MATLAB、电力电子技术等，感谢大家的支持！<br>
+<em><strong>注：里边的内容、见解有些小问题，希望各位大佬可以多多指教。</strong></em></p>
+<h2 id="学习资料附件：">学习资料附件：</h2>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Ha9CycY0eetdytLkgyPA5w">https://pan.baidu.com/s/1Ha9CycY0eetdytLkgyPA5w</a><br>
+提取码：4doj</p>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">樂乐</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fas fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">Thanks for your appreciation. / 感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a target="_blank" rel="noopener" href="https://github.com/sponsors/everfu"><img class="post-qr-code-img nolazyload" src="https://s3.qjqq.cn/47/661ba900c4bc1.webp!color" alt="Github Sponsor" style="border-color: var(--efu-black)"></a><div class="post-qr-code-desc">Github Sponsor</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec">Because of your support, I realize the value of writing articles. / 由于您的支持，我才能够实现写作的价值。</div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script><div class="reward-link mode"><a class="reward-link-button" href="/atom.xml"><i class="solitude fas fa-seedling"></i>订阅</a></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fmaojin08796.github.io%2F2025%2F04%2F25%2F%25E3%2580%2590%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%25E6%2580%25BB%25E7%25BB%2593%25E3%2580%2591%25E6%25A8%25A1%25E6%258B%259F%25E7%2594%25B5%25E5%25AD%2590%25E6%258A%2580%25E6%259C%25AF%25EF%25BC%2588%25E6%25A8%25A1%25E7%2594%25B5%25EF%25BC%2589%2F&amp;title=%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89&amp;desc=%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89&amp;summary=%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89&amp;site=%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89&amp;pics=https%3A%2F%2Fs2.loli.net%2F2023%2F06%2F26%2Ff2knxLCUB9yFQXr.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=https%3A%2F%2Fmaojin08796.github.io%2F2025%2F04%2F25%2F%25E3%2580%2590%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%25E6%2580%25BB%25E7%25BB%2593%25E3%2580%2591%25E6%25A8%25A1%25E6%258B%259F%25E7%2594%25B5%25E5%25AD%2590%25E6%258A%2580%25E6%259C%25AF%25EF%25BC%2588%25E6%25A8%25A1%25E7%2594%25B5%25EF%25BC%2589%2F&amp;title=%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89&amp;pic=https%3A%2F%2Fs2.loli.net%2F2023%2F06%2F26%2Ff2knxLCUB9yFQXr.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><div class="social-share-ico icon-qrcode" title="使用手机扫码阅读这篇文章"><i class="solitude fas fa-qrcode"></i><div class="share-main"><div class="share-main-all"><div id="qrcode"></div><div class="reward-dec">使用手机扫码阅读这篇文章</div></div></div><script pjax>typeof QRCode === 'function' && new QRCode(document.getElementById("qrcode"), {
+    text: 'https://maojin08796.github.io/2025/04/25/%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/',
+    correctLevel : QRCode.CorrectLevel.L
+});
+window.addEventListener('DOMContentLoaded', () => {
+    new QRCode(document.getElementById("qrcode"), {
+        text: 'https://maojin08796.github.io/2025/04/25/%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/',
+        correctLevel : QRCode.CorrectLevel.L
+    });
+});
+</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">樂乐の博客</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>课堂笔记<span class="tagsPageCount">4</span></span></a><a class="post-meta__tags" href="/tags/%E6%97%A5%E5%B8%B8/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>日常<span class="tagsPageCount">4</span></span></a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>模拟电子技术（模电）<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E7%94%B5/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>模电<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/04/28/Markdown%E8%AF%AD%E6%B3%95/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Markdown语法</div></div></a></div><div class="next-post pull-right"><a href="/2024/10/02/Python%E9%80%89%E4%BF%AE/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python选修</div></div></a></div></nav>
+        <div class="relatedPosts">
+            <div class="headline">
+                <i class="solitude fas fa-star"></i>
+                <span>喜欢这篇的人也看了</span>
+                <div class="relatedPosts-link">
+                    <a onclick="event.preventDefault(); toRandomPost();" href="javascript:void(0);" rel="external nofollow" data-pjax-state="">随便逛逛</a>
+                </div>
+            </div>
+            <div class="relatedPosts-list">
+            <div>
+                <a href="/2025/04/28/Markdown%E8%AF%AD%E6%B3%95/" title="Markdown语法">
+                    <img class="cover" src= "" data-lazy-src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">Markdown语法</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/2024/10/02/Python%E9%80%89%E4%BF%AE/" title="Python选修">
+                    <img class="cover" src= "" data-lazy-src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">Python选修</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src= "" data-lazy-src="/img/logo.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">樂乐</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/everfu" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/1329819902" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%E2%80%94%E2%80%94%E5%8D%8A%E5%AF%BC%E4%BD%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-text">第一章——半导体的基本知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一.基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-PN%E7%BB%93%E7%9A%84%E5%BD%A2%E6%88%90"><span class="toc-text">二.PN结的形成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-PN%E7%BB%93%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-text">三.PN结的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-PN%E7%BB%93%E7%9A%84%E5%8D%95%E5%90%91%E5%AF%BC%E7%94%B5%E6%80%A7"><span class="toc-text">1.PN结的单向导电性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-PN%E7%BB%93%E7%9A%84%E7%94%B5%E5%AE%B9%E6%95%88%E5%BA%94"><span class="toc-text">2.PN结的电容效应</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E7%BB%93%E6%9E%84%E5%92%8C%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="toc-text">四.二极管的结构和主要参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">1.二极管的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="toc-text">2.二极管的主要参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%B5%E8%B7%AF%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8"><span class="toc-text">五.二极管的基本电路分析方法及其应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%E2%80%94%E2%80%94BJT%E4%B8%89%E6%9E%81%E7%AE%A1"><span class="toc-text">第二章——BJT三极管</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-BJT%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">一.BJT的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%86%85%E9%83%A8%E8%BD%BD%E6%B5%81%E5%AD%90%E7%9A%84%E4%BC%A0%E8%BE%93%E8%BF%87%E7%A8%8B"><span class="toc-text">1.内部载流子的传输过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%94%B5%E6%B5%81%E5%88%86%E9%85%8D%E5%85%B3%E7%B3%BB"><span class="toc-text">2.电流分配关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%89%E6%9E%81%E7%AE%A1%E7%9A%84%E4%B8%89%E7%A7%8D%E7%BB%84%E6%80%81"><span class="toc-text">3.三极管的三种组态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-BJT%E7%9A%84V-I-%E7%89%B9%E6%80%A7%E6%9B%B2%E7%BA%BF"><span class="toc-text">4.BJT的V-I 特性曲线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-BJT%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="toc-text">5.BJT的主要参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95"><span class="toc-text">二.放大电路的分析方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90%E6%B3%95"><span class="toc-text">1.图解分析法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B0%8F%E4%BF%A1%E5%8F%B7%E6%A8%A1%E5%9E%8B%E5%88%86%E6%9E%90%E6%B3%95"><span class="toc-text">2.小信号模型分析法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E5%9F%BA%E6%9C%AC%E5%85%B1%E5%B0%84%E6%9E%81%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E3%80%81%E5%85%B1%E9%9B%86%E7%94%B5%E6%9E%81%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E5%92%8C%E5%85%B1%E5%9F%BA%E6%9E%81%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">三.基本共射极放大电路、共集电极放大电路和共基极放大电路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%85%B1%E5%B0%84%E6%9E%81%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">1.基本共射极放大电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%85%B1%E9%9B%86%E7%94%B5%E6%9E%81%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%EF%BC%88%E5%B0%84%E6%9E%81%E8%BE%93%E5%87%BA%E5%99%A8%EF%BC%89"><span class="toc-text">2.共集电极放大电路（射极输出器）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%85%B1%E5%9F%BA%E6%9E%81%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">3.共基极放大电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%B8%89%E7%A7%8D%E7%BB%84%E6%80%81%E7%9A%84%E5%88%A4%E5%88%AB"><span class="toc-text">4.三种组态的判别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E5%B0%84%E6%9E%81%E5%81%8F%E7%BD%AE%E7%94%B5%E8%B7%AF"><span class="toc-text">四.射极偏置电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-%E7%BB%84%E5%90%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">五.组合放大电路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94MOS%E5%9C%BA%E6%95%88%E5%BA%94%E7%AE%A1"><span class="toc-text">第三章——MOS场效应管</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E5%9C%BA%E6%95%88%E5%BA%94%E7%AE%A1%E7%9A%84%E5%88%86%E7%B1%BB%EF%BC%9A"><span class="toc-text">一.场效应管的分类：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-N%E6%B2%9F%E9%81%93%E5%A2%9E%E5%BC%BA%E5%9E%8BMOSFET"><span class="toc-text">1.N沟道增强型MOSFET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-N%E6%B2%9F%E9%81%93%E8%80%97%E5%B0%BD%E5%9E%8BMOSFET"><span class="toc-text">2.N沟道耗尽型MOSFET</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-P%E6%B2%9F%E9%81%93MOSFET"><span class="toc-text">3.P沟道MOSFET</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-MOSFET%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="toc-text">二.MOSFET的主要参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-MOSFET%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%A1%E7%AE%97"><span class="toc-text">三.MOSFET放大电路的分析与计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E5%90%84%E7%A7%8D%E6%94%BE%E5%A4%A7%E5%99%A8%E4%BB%B6%E7%94%B5%E8%B7%AF%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83"><span class="toc-text">四.各种放大器件电路性能比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0%E2%80%94%E2%80%94%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF"><span class="toc-text">第四章——模拟集成电路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E7%94%B5%E6%B5%81%E6%BA%90"><span class="toc-text">一.电流源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E5%B7%AE%E5%88%86%E5%BC%8F%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">二.差分式放大电路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%BB%93%E6%9E%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">1.结构及相关概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B0%84%E6%9E%81%E8%80%A6%E5%90%88%E5%B7%AE%E5%88%86%E5%BC%8F%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">2.射极耦合差分式放大电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%B7%AE%E5%88%86%E5%BC%8F%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E4%BC%A0%E8%BE%93%E7%89%B9%E6%80%A7%E6%9B%B2%E7%BA%BF"><span class="toc-text">3.差分式放大电路的传输特性曲线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8"><span class="toc-text">三.集成电路运算放大器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%9E%E9%99%85%E9%9B%86%E6%88%90%E8%BF%90%E6%94%BE%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="toc-text">1.实际集成运放的主要参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E9%9B%86%E6%88%90%E8%BF%90%E6%94%BE%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E9%97%AE%E9%A2%98"><span class="toc-text">四.集成运放应用中的实际问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A4%B1%E8%B0%83%E7%94%B5%E5%8E%8BVIO%E3%80%81%E5%A4%B1%E8%B0%83%E7%94%B5%E6%B5%81IIO%E5%92%8C%E5%81%8F%E7%BD%AE%E7%94%B5%E6%B5%81IIB%E5%B8%A6%E6%9D%A5%E7%9A%84%E8%AF%AF%E5%B7%AE"><span class="toc-text">1.失调电压VIO、失调电流IIO和偏置电流IIB带来的误差</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E4%B8%AD%E7%9A%84%E5%99%AA%E5%A3%B0%E4%B8%8E%E5%B9%B2%E6%89%B0"><span class="toc-text">2.放大电路中的噪声与干扰</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E2%80%94%E2%80%94%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">第五章——反馈放大电路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E5%8F%8D%E9%A6%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="toc-text">一.反馈的基本概念与分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%9B%B4%E6%B5%81%E5%8F%8D%E9%A6%88%E4%B8%8E%E4%BA%A4%E6%B5%81%E5%8F%8D%E9%A6%88"><span class="toc-text">1.直流反馈与交流反馈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%AD%A3%E5%8F%8D%E9%A6%88%E4%B8%8E%E8%B4%9F%E5%8F%8D%E9%A6%88"><span class="toc-text">2.正反馈与负反馈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%B2%E8%81%94%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%B9%B6%E8%81%94%E5%8F%8D%E9%A6%88"><span class="toc-text">3.串联反馈与并联反馈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%94%B5%E5%8E%8B%E5%8F%8D%E9%A6%88%E4%B8%8E%E7%94%B5%E6%B5%81%E5%8F%8D%E9%A6%88"><span class="toc-text">4.电压反馈与电流反馈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%BB%84%E6%80%81"><span class="toc-text">二.负反馈放大电路的四种组态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9B%9B%E7%A7%8D%E7%BB%84%E6%80%81"><span class="toc-text">1.四种组态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9B%9B%E7%A7%8D%E7%BB%84%E6%80%81%E7%89%B9%E7%82%B9%E5%B0%8F%E7%BB%93"><span class="toc-text">2.四种组态特点小结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BF%A1%E5%8F%B7%E6%BA%90%E5%AF%B9%E5%8F%8D%E9%A6%88%E6%95%88%E6%9E%9C%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">3.信号源对反馈效果的影响</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E5%A2%9E%E7%9B%8A%E7%9A%84%E4%B8%80%E8%88%AC%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">三.负反馈放大电路增益的一般表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%AF%B9%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">四.负反馈对放大电路性能的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-%E8%AE%BE%E8%AE%A1%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4"><span class="toc-text">五.设计负反馈放大电路的一般步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD-%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7%EF%BC%88%E8%87%AA%E6%BF%80%E6%8C%AF%E8%8D%A1%E5%8F%8A%E7%A8%B3%E5%AE%9A%E5%B7%A5%E4%BD%9C%E7%9A%84%E6%9D%A1%E4%BB%B6%EF%BC%89"><span class="toc-text">六.负反馈放大电路的稳定性（自激振荡及稳定工作的条件）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%8F%8A%E6%9D%A1%E4%BB%B6"><span class="toc-text">1.产生原因及条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%A8%B3%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%9D%A1%E4%BB%B6"><span class="toc-text">2.稳定工作条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%B4%9F%E5%8F%8D%E9%A6%88%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E7%A8%B3%E5%AE%9A%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-text">3.负反馈放大电路稳定性分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0%E2%80%94%E2%80%94%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">第六章——功率放大电路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E7%94%B2%E7%B1%BB%E5%8A%9F%E6%94%BE"><span class="toc-text">一.甲类功放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E4%B9%99%E7%B1%BB%E5%8A%9F%E6%94%BE%E2%80%94%E2%80%94%E5%8F%8C%E7%94%B5%E6%BA%90%E4%BA%92%E8%A1%A5%E5%AF%B9%E7%A7%B0%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%EF%BC%88%E6%95%88%E7%8E%87%E9%AB%98%EF%BC%89"><span class="toc-text">二.乙类功放——双电源互补对称功率放大电路（效率高）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%94%B5%E8%B7%AF%E7%BB%84%E6%88%90"><span class="toc-text">1.电路组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">2.工作原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E7%94%B2%E4%B9%99%E7%B1%BB%E5%8A%9F%E6%94%BE%E2%80%94%E2%80%94%E4%BA%92%E8%A1%A5%E5%AF%B9%E7%A7%B0%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-text">三.甲乙类功放——互补对称功率放大电路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0%E2%80%94%E2%80%94%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E4%B8%8E%E4%BF%A1%E5%8F%B7%E4%BA%A7%E7%94%9F%E7%94%B5%E8%B7%AF"><span class="toc-text">第七章——信号处理与信号产生电路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E6%9C%89%E6%BA%90%E6%BB%A4%E6%B3%A2%E7%94%B5%E8%B7%AF"><span class="toc-text">一.有源滤波电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%AD%A3%E5%BC%A6%E6%B3%A2%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF"><span class="toc-text">二.正弦波振荡电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-RC%E6%AD%A3%E5%BC%A6%E6%B3%A2%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF"><span class="toc-text">三.RC正弦波振荡电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-LC%E6%AD%A3%E5%BC%A6%E6%B3%A2%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF"><span class="toc-text">四.LC正弦波振荡电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94-%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-text">五.电压比较器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8D%95%E9%97%A8%E9%99%90%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-text">1.单门限电压比较器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%BF%9F%E6%BB%9E%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-text">2.迟滞比较器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%B0%8F%E7%BB%93"><span class="toc-text">3.小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD-%E9%9D%9E%E6%AD%A3%E5%BC%A6%E6%B3%A2%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF"><span class="toc-text">六.非正弦波振荡电路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%96%B9%E6%B3%A2%E4%BA%A7%E7%94%9F%E7%94%B5%E8%B7%AF%EF%BC%88%E5%A4%9A%E8%B0%90%E6%8C%AF%E8%8D%A1%E7%94%B5%E8%B7%AF%EF%BC%89"><span class="toc-text">1.方波产生电路（多谐振荡电路）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%94%AF%E9%BD%BF%E6%B3%A2%E4%BA%A7%E7%94%9F%E7%94%B5%E8%B7%AF"><span class="toc-text">2.锯齿波产生电路</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0%E2%80%94%E2%80%94%E7%9B%B4%E6%B5%81%E7%A8%B3%E5%8E%8B%E7%94%B5%E6%BA%90"><span class="toc-text">第八章——直流稳压电源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E5%8D%95%E7%9B%B8%E6%A1%A5%E5%BC%8F%E6%95%B4%E6%B5%81%E7%94%B5%E8%B7%AF"><span class="toc-text">一.单相桥式整流电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%BB%A4%E6%B3%A2%E7%94%B5%E8%B7%AF"><span class="toc-text">二.滤波电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E4%B8%B2%E8%81%94%E5%8F%8D%E9%A6%88%E5%BC%8F%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF"><span class="toc-text">三.串联反馈式稳压电路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E9%99%84%E4%BB%B6%EF%BC%9A"><span class="toc-text">学习资料附件：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/11/27/hello-world/" title="Hello World"><div class="content"><span class="title" href="/2025/11/27/hello-world/" title="Hello World">Hello World</span></div></a><a class="aside-list-item" href="/2025/04/28/Markdown%E8%AF%AD%E6%B3%95/" title="Markdown语法"><div class="thumbnail"><img alt="Markdown语法" src= "" data-lazy-src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png"></div><div class="content"><span class="title" href="/2025/04/28/Markdown%E8%AF%AD%E6%B3%95/" title="Markdown语法">Markdown语法</span></div></a><a class="aside-list-item" href="/2025/04/25/%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/" title="【知识点总结】模拟电子技术（模电）"><div class="thumbnail"><img alt="【知识点总结】模拟电子技术（模电）" src= "" data-lazy-src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png"></div><div class="content"><span class="title" href="/2025/04/25/%E3%80%90%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E3%80%91%E6%A8%A1%E6%8B%9F%E7%94%B5%E5%AD%90%E6%8A%80%E6%9C%AF%EF%BC%88%E6%A8%A1%E7%94%B5%EF%BC%89/" title="【知识点总结】模拟电子技术（模电）">【知识点总结】模拟电子技术（模电）</span></div></a><a class="aside-list-item" href="/2024/10/02/Python%E9%80%89%E4%BF%AE/" title="Python选修"><div class="thumbnail"><img alt="Python选修" src= "" data-lazy-src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png"></div><div class="content"><span class="title" href="/2024/10/02/Python%E9%80%89%E4%BF%AE/" title="Python选修">Python选修</span></div></a><a class="aside-list-item" href="/2023/06/12/MathLax%E8%AF%AD%E6%B3%95/" title="MathLax语法"><div class="thumbnail"><img alt="MathLax语法" src= "" data-lazy-src="https://s2.loli.net/2023/06/26/f2knxLCUB9yFQXr.png"></div><div class="content"><span class="title" href="/2023/06/12/MathLax%E8%AF%AD%E6%B3%95/" title="MathLax语法">MathLax语法</span></div></a></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>樂乐の博客</span></div><div class="footer-bar-description">Articles from Ever Fu. / 文章来自 Ever Fu</div><div><a class="footer-bar-link" href="/about/" title="Learn more / 了解更多">Learn more / 了解更多</a></div></div><div id="st-footer"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2025 By<a class="footer-bar-link" href="/" title="樂乐">樂乐</a></div><div class="beian-group"><div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch" title="湘公网安备43048102000175号"><div><img class="beian-icon" src= "" data-lazy-src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="湘公网安备43048102000175号"></div><span class="beian-name">湘公网安备43048102000175号</span></a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="湘ICP备2024080357号-1"><img class="beian-icon" src= "" data-lazy-src="/" alt="湘ICP备2024080357号-1"><span class="beian-name">湘ICP备2024080357号-1</span></a></div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div><div class="footer-bar-right"><a class="footer-bar-link" href="/atom.xml" title="">RSS</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude/blob/main/LICENSE" title=""><i class="solitude fas fa-copyright"></i><i class="solitude fab fa-creative-commons-by"></i><i class="solitude fab fa-creative-commons-nc"></i><i class="solitude fab fa-creative-commons-nd"></i></a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://boringbay.com/" title=""><img src= "" data-lazy-src="https://boringbay.com/api/badge/www.efu.me" alt="boringbay"></a></div></div></div></div><div class="comment-barrage needEndHide"></div></footer></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script async src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script><script defer src="/js/third_party/universe.min.js?v=3.0.21"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  if (typeof dark === 'function') dark();
+});
+</script><script defer src="/js/tw_cn.js?v=3.0.21"></script><!-- UI enhancement scripts--><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script><!-- Music player scripts--><script>var meting_api = 'https://music.3e0.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script><!-- Cover color processing scripts--><script defer src="https://cdn.jsdelivr.net/npm/colorthief@2.6.0/dist/color-thief.min.js"></script><script defer src="/js/covercolor/local.js?v=3.0.21"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://twikoo-maojin.netlify.app/.netlify/functions/twikoo',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://twikoo-maojin.netlify.app/.netlify/functions/twikoo',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+        
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        false && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || false) {
+        if (false) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>mermaid.run();
+</script><script defer pjax src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.21"></script><div><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips"><i class="music-control-btn fas fa-backward-step" id="music-prev" onclick="sco.musicSkipBack()"></i><i class="music-control-btn fas fa-pause" id="music-pause" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-play" id="music-play" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-forward-step" id="music-next" onclick="sco.musicSkipForward()"></i></div><meting-js id="6903056847" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.8"></meting-js></div></div></body></html>
+        <script>
+            const posts = ["2025/11/27/hello-world/","2025/04/28/Markdown语法/","2025/04/25/【知识点总结】模拟电子技术（模电）/","2024/10/02/Python选修/","2023/06/12/MathLax语法/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
